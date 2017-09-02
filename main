@@ -1,0 +1,45 @@
+#!/bin/bash
+#
+# Displaying the current time using AQM0802
+readonly DEVICE="0x3e"
+
+#######################################
+# Convert string to hexcode
+# Globals:
+#   None
+# Arguments:
+#   string
+# Returns:
+#   hexcode
+#######################################
+function convert_hexcode() {
+  local string="$1"
+  local hexcode=""
+
+  if [[ ${#string} -ne 0 ]]; then
+    for index in $(seq 0 $((${#string} - 1))); do
+      hexcode="${hexcode} 0x$(printf "%x" \'${string:${index}:1})"
+    done
+  fi
+
+  echo ${hexcode}
+}
+
+# aqm0802 initialization
+i2cset -y 1 ${DEVICE} 0 0x38 0x39 0x14 0x70 0x56 0x6c i
+sleep 0.2
+i2cset -y 1 ${DEVICE} 0 0x38 0x0c 0x01 i
+sleep 0.2
+
+while true; do
+  now=$(LANG=en_US.UTF-8 date '+%m/%d%a%H:%M:%S')
+
+  # display 1st line
+  display1="$(convert_hexcode ${now:0:8})"
+  i2cset -y 1 ${DEVICE} 0x40 ${display1} i
+  i2cset -y 1 ${DEVICE} 0 0xc0 b
+
+  # display 2nd line
+  display2="$(convert_hexcode ${now:8:8})"
+  i2cset -y 1 ${DEVICE} 0x40 ${display2} i
+done
