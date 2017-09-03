@@ -6,6 +6,10 @@ Display the current time using AQM0802 and Raspberry Pi.
 
 AQM0802 is a character LCD module. This script displays current time using Raspberry Pi.
 
+## DEMO
+
+![demo](https://github.com/kazumatsudo/aqm0802-clock/blob/demo/demo.gif)
+
 ## Requirement
 
 - i2c-tools
