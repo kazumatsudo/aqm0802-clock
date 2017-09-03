@@ -43,4 +43,4 @@ AQM0802 is a character LCD module. This script displays current time using Raspb
 
 ## License
 
-[MIT](https://github.com/kazumatsudo/aqm0802-clock/LICENSE)
+[MIT](https://github.com/kazumatsudo/aqm0802-clock/blob/master/LICENSE)
